@@ -1,8 +1,8 @@
-#include <bits/stdc++.h>
+#include <bits/stdc++.h>  // incluye todas las bibliotecas estandar de C++
 using namespace std;
 using namespace std::chrono;
 
-// Función para dividir una matriz en submatrices
+// funcion para dividir una matriz en submatrices
 void splitMatrix(const vector<vector<int>>& matrix, vector<vector<int>>& A, vector<vector<int>>& B, vector<vector<int>>& C, vector<vector<int>>& D) {
     int n = matrix.size();
     int m = matrix[0].size();
@@ -23,7 +23,7 @@ void splitMatrix(const vector<vector<int>>& matrix, vector<vector<int>>& A, vect
     }
 }
 
-// Función para sumar dos matrices
+// funcion para sumar dos matrices
 vector<vector<int>> addMatrices(const vector<vector<int>>& A, const vector<vector<int>>& B) {
     int n = A.size();
     vector<vector<int>> result(n, vector<int>(n));
@@ -37,7 +37,7 @@ vector<vector<int>> addMatrices(const vector<vector<int>>& A, const vector<vecto
     return result;
 }
 
-// Función para restar dos matrices
+// funcion para restar dos matrices
 vector<vector<int>> subtractMatrices(const vector<vector<int>>& A, const vector<vector<int>>& B) {
     int n = A.size();
     vector<vector<int>> result(n, vector<int>(n));
@@ -51,7 +51,7 @@ vector<vector<int>> subtractMatrices(const vector<vector<int>>& A, const vector<
     return result;
 }
 
-// Implementación del algoritmo de Strassen
+// implementacion del algoritmo de strassen
 vector<vector<int>> strassen(const vector<vector<int>>& A, const vector<vector<int>>& B) {
     int n = A.size();
     if (n == 1) {
@@ -63,8 +63,8 @@ vector<vector<int>> strassen(const vector<vector<int>>& A, const vector<vector<i
     vector<vector<int>> A11, A12, A21, A22;
     vector<vector<int>> B11, B12, B21, B22;
 
-    splitMatrix(A, A11, A12, A21, A22);
-    splitMatrix(B, B11, B12, B21, B22);
+    splitMatrix(A, A11, A12, A21, A22);  // divide la matriz A en submatrices
+    splitMatrix(B, B11, B12, B21, B22);  // divide la matriz B en submatrices
 
     vector<vector<int>> M1 = strassen(addMatrices(A11, A22), addMatrices(B11, B22));
     vector<vector<int>> M2 = strassen(addMatrices(A21, A22), B11);
@@ -94,12 +94,12 @@ vector<vector<int>> strassen(const vector<vector<int>>& A, const vector<vector<i
     return result;
 }
 
-// Función para verificar si un número es potencia de 2
+// funcion para verificar si un numero es potencia de 2
 bool isPowerOfTwo(int n) {
     return (n > 0) && ((n & (n - 1)) == 0);
 }
 
-// Función para verificar que las matrices sean potencias de 2
+// funcion para verificar que las matrices sean potencias de 2
 bool checkMatrixSize(const vector<vector<int>>& matrix) {
     int n = matrix.size();
     return isPowerOfTwo(n) && isPowerOfTwo(matrix[0].size());
@@ -119,12 +119,12 @@ vector<vector<int>> parseMatrix(const string& matrixStr) {
                 matrix.push_back(row);
                 row.clear();
             }
-            inRow = true; // Se está procesando una nueva fila
+            inRow = true; // se esta procesando una nueva fila
         } else if (ch == ']') {
             if (inRow && !row.empty()) {
                 matrix.push_back(row);
                 row.clear();
-                inRow = false; // Termina la fila actual
+                inRow = false; // termina la fila actual
             }
         } else if (isdigit(ch) || ch == '-') {
             ss.putback(ch);
@@ -133,7 +133,7 @@ vector<vector<int>> parseMatrix(const string& matrixStr) {
         }
     }
 
-    // Asegura que la última fila sea agregada
+    // asegura que la ultima fila sea agregada
     if (inRow && !row.empty()) {
         matrix.push_back(row);
     }
@@ -153,7 +153,7 @@ void printMatrix(const vector<vector<int>>& matrix) {
 }
 
 int main() {
-    ifstream inputFile("/workspaces/Algoritmos-algoco/identidad_128x128.txt");
+    ifstream inputFile("/workspaces/Algoritmos-algoco/identidad_128x128.txt");  // <----- cambiar aqui la direccion del archivo
     stringstream fileStream;
     vector<vector<int>> A, B;
 
@@ -161,7 +161,7 @@ int main() {
         fileStream << inputFile.rdbuf();
         string content = fileStream.str();
 
-        // Encuentra el doble salto de línea que separa las matrices
+        // encuentra el doble salto de linea que separa las matrices
         size_t pos = content.find("\n\n");
         if (pos != string::npos) {
             A = parseMatrix(content.substr(0, pos));
@@ -170,17 +170,17 @@ int main() {
 
         inputFile.close();
 
-        // Verificar que las matrices sean de tamaño potencia de 2
+        // verificar que las matrices sean de tamaño potencia de 2
         if (checkMatrixSize(A) && checkMatrixSize(B) && A.size() == B.size()) {
-            // Medir el tiempo de ejecución
+            // medir el tiempo de ejecucion
             auto start = high_resolution_clock::now();
 
-            // Multiplicar las matrices usando el algoritmo de Strassen
+            // multiplicar las matrices usando el algoritmo de strassen
             vector<vector<int>> C = strassen(A, B);
 
-            // Imprimir el resultado
+            // imprimir el resultado
             /*
-            cout << "Resultado de la multiplicación:" << endl;
+            cout << "Resultado de la multiplicacion:" << endl;  <----- quitar comentarios para imprimir
             printMatrix(C);
             */
             auto end = high_resolution_clock::now();
@@ -188,9 +188,9 @@ int main() {
             double milliseconds = duration / 1000.0;
 
             if (milliseconds < 1.0) {
-                cout << "Tiempo de ejecución: " << fixed << setprecision(6) << milliseconds << " ms" << endl;
+                cout << "Tiempo de ejecucion: " << fixed << setprecision(6) << milliseconds << " ms" << endl;
             } else {
-                cout << "Tiempo de ejecución: " << fixed << setprecision(3) << milliseconds << " ms" << endl;
+                cout << "Tiempo de ejecucion: " << fixed << setprecision(3) << milliseconds << " ms" << endl;
             }
         } else {
             cout << "Las matrices deben ser cuadradas y de tamaño potencia de 2." << endl;

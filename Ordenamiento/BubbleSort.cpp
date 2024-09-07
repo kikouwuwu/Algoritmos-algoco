@@ -16,7 +16,7 @@ void bubble_sort(vector<int>& array) {
                 swapped = true;
             }
         }
-        // Si no hubo intercambio en la pasada, la lista está ordenada
+        // si no hubo intercambio en la pasada, la lista está ordenada
         if (!swapped) break;
     }
 }
@@ -26,7 +26,7 @@ int main() {
     vector<int> numbers;
     int number;
 
-    // Lee los números desde el archivo
+    // lee los números desde el archivo
     if (file.is_open()) {
         while (file >> number) {
             numbers.push_back(number);
@@ -37,24 +37,24 @@ int main() {
         return 1;
     }
 
-    // Medir el tiempo de ejecución
+    // medir el tiempo de ejecución
     auto start = high_resolution_clock::now();
 
-    // Ordenar los números
+    // ordenar los números
     bubble_sort(numbers);
 
     auto end = high_resolution_clock::now();
     duration<double, milli> elapsed = end - start;
 
-    // Mostrar los números ordenados
+    // mostrar los números ordenados
     /*
-    for (int num : numbers) {
+    for (int num : numbers) {           // <----- quitar los comentario para imprimir la lista ordenada
         cout << num << " ";
     }
     cout << endl;
     */
    
-    // Mostrar el tiempo total de ejecución en milisegundos
+    // mostrar el tiempo total de ejecución en milisegundos
     cout << "Tiempo de ejecución: " << elapsed.count() << " ms." << endl;
 
     return 0;
